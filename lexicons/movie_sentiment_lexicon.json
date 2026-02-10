@@ -1,0 +1,17 @@
+{
+  "extraordinary": 3,
+  "amazing": 2,
+  "brilliant": 3,
+  "excellent": 2,
+  "great": 2,
+  "good": 1,
+  "decent": 1,
+
+
+  "predictable": -1,
+  "slow": -1,
+  "boring": -2,
+  "bad": -2,
+  "terrible": -3,
+  "waste": -3
+}
