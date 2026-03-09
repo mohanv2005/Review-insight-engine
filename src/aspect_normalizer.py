@@ -1,17 +1,38 @@
 ASPECT_GROUPS = {
+
+    # story
     "story": "story",
     "plot": "story",
     "script": "story",
+    "screenplay": "story",
+    "climax": "story",
 
+    # acting
     "acting": "acting",
+    "actor": "acting",
+    "lead": "acting",
+    "role": "acting",
     "performance": "acting",
+    "cast": "acting",
 
+    # visuals
+    "cinematography": "visuals",
+    "visual": "visuals",
+    "scene": "visuals",
+
+    # direction
     "direction": "direction",
     "storytelling": "direction",
 
-    "cinematography": "visuals",
-    "visuals": "visuals"
+    # music
+    "music": "music",
+    "background": "music",
+    "score": "music",
+
+    # dialogue
+    "dialogue": "dialogue"
 }
+
 
 def normalize_aspects(aspect_sentiments):
     normalized = {}

@@ -12,5 +12,21 @@ The system extracts important aspects such as acting and story from reviews and 
 - NLTK
 - Pandas
 
+## Pipeline
+reviews.csv
+   ↓
+preprocessing
+   ↓
+aspect extraction
+   ↓
+aspect filtering
+   ↓
+sentiment scoring
+   ↓
+aspect normalization
+   ↓
+aspect ranking
+   ↓
+insight generation
 ---
 
