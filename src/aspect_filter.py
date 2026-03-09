@@ -1,37 +1,8 @@
-ALLOWED_ASPECTS = {
-    "acting",
-    "actor",
-    "performance",
-    "lead",
-    "role",
-    "cast",
+from src.aspect_normalizer import ASPECT_GROUPS
 
-    "story",
-    "plot",
-    "script",
-    "screenplay",
-    "climax",
-
-    "visual",
-    "cinematography",
-    "scene",
-
-    "direction",
-    "storytelling",
-
-    "music",
-    "background",
-    "score",
-
-    "dialogue",
-
-    "pacing",
-    "execution"
-}
-
+ALLOWED_ASPECTS = set(ASPECT_GROUPS.keys())
 
 def filter_aspects(aspects):
-
     filtered = []
 
     for aspect in aspects:
