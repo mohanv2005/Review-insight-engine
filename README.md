@@ -1,5 +1,5 @@
 
-# Review Insights Engine 🎬
+# Review Insights Engine 
 
 Review Insights Engine is an **Aspect-Based Sentiment Analysis (ABSA)** system that analyzes movie reviews using **Natural Language Processing (NLP)**.
 
@@ -9,7 +9,7 @@ This allows the system to generate **structured insights about what audiences li
 
 ---
 
-## 🚀 Features
+## Features
 
 ### Aspect Extraction
 Automatically identifies important elements discussed in reviews such as acting, story, visuals, and music.
@@ -28,7 +28,7 @@ Creates a complete **HTML report** summarizing the analysis results.
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 * **Python** – Core programming language
 * **spaCy** – Tokenization, POS tagging, and dependency parsing
@@ -38,7 +38,7 @@ Creates a complete **HTML report** summarizing the analysis results.
 
 ---
 
-## ⚙️ NLP Pipeline
+## NLP Pipeline
 
 The system processes reviews through the following pipeline:
 
@@ -65,11 +65,11 @@ Visualization & Report Generation
 
 ---
 
-## 💻 Installation
+## Installation
 
 1. Clone the repository:
 ```bash
-git clone [https://github.com/mohanv2005/Review-insight-engine.git](https://github.com/mohanv2005/Review-insight-engine.git)
+git clone https://github.com/mohanv2005/Review-insight-engine.git
 cd Review-insight-engine
 
 ```
@@ -92,7 +92,7 @@ python -m spacy download en_core_web_sm
 
 ---
 
-## 💡 Usage
+## Usage
 
 To run the pipeline on the default dataset (`data/movies_reviews.csv`) and generate the HTML report in the default `outputs/` folder, execute the main script:
 
@@ -110,7 +110,7 @@ python main.py --input data/movies_reviews.csv --output custom_results_folder
 
 ---
 
-## 📌 Future Improvements
+## Future Improvements
 
 Potential improvements for the system include:
 

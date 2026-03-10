@@ -1,0 +1,98 @@
+
+    <html>
+    <head>
+        <title>Review Insights Engine Report</title>
+
+        <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+            background-color: #f4f6f8;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        h2 {
+            color: #34495e;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        img {
+            width: 700px;
+            margin-top: 15px;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <h1>Review Insights Engine</h1>
+
+        <div class="card">
+            <h2>Movie</h2>
+            <p>The Crimson Pit</p>
+        </div>
+
+        <div class="card">
+            <h2>Summary</h2>
+            <p>Overall, Audiences appreciated the acting, story, visuals while criticizing the dialogue, pacing.</p>
+        </div>
+
+        <div class="card">
+            <h2>Key Insights</h2>
+            <ul>
+            <li>Viewers strongly praised the acting.</li><li>Viewers strongly praised the visuals.</li><li>Viewers strongly praised the direction.</li><li>Viewers strongly praised the story.</li><li>Viewers strongly praised the music.</li><li>Viewers were dissatisfied with the dialogue.</li><li>Viewers were dissatisfied with the pacing.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Aspect Sentiment Scores</h2>
+
+            <table>
+            <tr>
+                <th>Aspect</th>
+                <th>Score</th>
+            </tr>
+
+            <tr><td>acting</td><td>22</td></tr><tr><td>story</td><td>9</td></tr><tr><td>visuals</td><td>18</td></tr><tr><td>music</td><td>6</td></tr><tr><td>direction</td><td>11</td></tr><tr><td>dialogue</td><td>-1</td></tr><tr><td>pacing</td><td>-6</td></tr>
+
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Aspect Sentiment Distribution</h2>
+            <img src="aspect_sentiment_chart.png">
+        </div>
+
+        <div class="card">
+            <h2>Top Positive vs Negative Aspects</h2>
+            <img src="top_aspects_chart.png">
+        </div>
+
+    </body>
+    </html>
+    
