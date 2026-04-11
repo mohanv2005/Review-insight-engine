@@ -1,6 +1,17 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+import html
 import os
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import pandas as pd
+
+_CHARTS_DIR = "static"
+
+
+def _ensure_charts_dir():
+    os.makedirs(_CHARTS_DIR, exist_ok=True)
 
 def save_aspect_scores(aspect_scores, output_dir):
 
@@ -11,6 +22,7 @@ def save_aspect_scores(aspect_scores, output_dir):
 
     file_path = os.path.join(output_dir, "aspect_scores.csv")
     df.to_csv(file_path, index=False)
+
 
 def save_insights(insights, output_dir):
 
@@ -40,9 +52,10 @@ def plot_aspect_sentiments(aspect_scores, output_dir):
 
     plt.tight_layout()
 
-    file_path = os.path.join(output_dir, "aspect_sentiment_chart.png")
+    _ensure_charts_dir()
+    file_path = os.path.join(_CHARTS_DIR, "aspect_sentiment_chart.png")
     plt.savefig(file_path)
-    plt.close() # Good practice to close the plot to free up memory
+    plt.close()
 
 
 def plot_top_aspects(top_positive, top_negative, output_dir):
@@ -55,130 +68,111 @@ def plot_top_aspects(top_positive, top_negative, output_dir):
 
     plt.figure(figsize=(10,5))
 
-    plt.bar(pos_aspects, pos_scores, label="Positive Aspects", color='green') # Added color for clarity
-    plt.bar(neg_aspects, neg_scores, label="Negative Aspects", color='red') # Added color for clarity
+    plt.bar(pos_aspects, pos_scores, label="Positive Aspects", color='green')
+    plt.bar(neg_aspects, neg_scores, label="Negative Aspects", color='red')
 
     plt.title("Top Positive vs Negative Aspects")
     plt.xlabel("Aspect")
     plt.ylabel("Sentiment Score")
 
     plt.legend()
-
     plt.tight_layout()
 
-    file_path = os.path.join(output_dir, "top_aspects_chart.png")
+    _ensure_charts_dir()
+    file_path = os.path.join(_CHARTS_DIR, "top_aspects_chart.png")
     plt.savefig(file_path)
-    plt.close() # Good practice to close the plot
+    plt.close()
 
 
 def generate_html_report(movie_name, summary, insights, aspect_scores, output_dir):
 
+    safe_movie = html.escape(str(movie_name))
+    safe_summary = html.escape(str(summary))
+
     rows = ""
     for aspect, score in aspect_scores.items():
-        rows += f"<tr><td>{aspect}</td><td>{score}</td></tr>"
+        rows += (
+            f"<tr><td>{html.escape(str(aspect))}</td>"
+            f"<td>{html.escape(str(score))}</td></tr>"
+        )
 
     insights_html = ""
     for insight in insights:
-        insights_html += f"<li>{insight}</li>"
+        insights_html += f"<li>{html.escape(str(insight))}</li>"
 
-    html_content = f"""
-    <html>
-    <head>
-        <title>Review Insights Engine Report</title>
+    html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Review Insights Engine — Report</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+</head>
+<body>
+    <div class="site-wrap">
+        <header class="site-header">
+            <h1 class="site-title">Review Insights Engine</h1>
+            <p class="site-subtitle">Aspect-based sentiment analysis from your uploaded reviews.</p>
+            <span class="report-badge">Analysis report</span>
+        </header>
 
-        <style>
-        body {{
-            font-family: Arial;
-            margin: 40px;
-            background-color: #f4f6f8;
-        }}
+        <div class="content-stack">
+            <section class="card">
+                <h2 class="card-title">Movie name</h2>
+                <p class="card-body">{safe_movie}</p>
+            </section>
 
-        h1 {{
-            color: #2c3e50;
-        }}
+            <section class="card">
+                <h2 class="card-title">Summary</h2>
+                <p class="card-body">{safe_summary}</p>
+            </section>
 
-        h2 {{
-            color: #34495e;
-        }}
+            <section class="card">
+                <h2 class="card-title">Key insights</h2>
+                <ul class="insight-list card-body">
+                    {insights_html}
+                </ul>
+            </section>
 
-        .card {{
-            background: white;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
-        }}
+            <section class="card">
+                <h2 class="card-title">Aspect sentiment scores</h2>
+                <div class="data-table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-        table {{
-            border-collapse: collapse;
-            width: 100%;
-        }}
+            <section class="card">
+                <h2 class="card-title">Aspect sentiment distribution</h2>
+                <figure class="figure-block">
+                    <img class="report-img" src="/static/aspect_sentiment_chart.png" alt="Aspect sentiment bar chart">
+                </figure>
+            </section>
 
-        th, td {{
-            border: 1px solid #ddd;
-            padding: 10px;
-        }}
+            <section class="card">
+                <h2 class="card-title">Top positive vs negative aspects</h2>
+                <figure class="figure-block">
+                    <img class="report-img" src="/static/top_aspects_chart.png" alt="Top positive vs negative aspects chart">
+                </figure>
+            </section>
 
-        th {{
-            background-color: #2c3e50;
-            color: white;
-        }}
-
-        img {{
-            width: 700px;
-            margin-top: 15px;
-        }}
-        </style>
-    </head>
-
-    <body>
-
-        <h1>Review Insights Engine</h1>
-
-        <div class="card">
-            <h2>Movie</h2>
-            <p>{movie_name}</p>
+            <section class="card report-footer">
+                <a href="/" class="btn btn-primary" role="button">Upload Another CSV</a>
+            </section>
         </div>
-
-        <div class="card">
-            <h2>Summary</h2>
-            <p>{summary}</p>
-        </div>
-
-        <div class="card">
-            <h2>Key Insights</h2>
-            <ul>
-            {insights_html}
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>Aspect Sentiment Scores</h2>
-
-            <table>
-            <tr>
-                <th>Aspect</th>
-                <th>Score</th>
-            </tr>
-
-            {rows}
-
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>Aspect Sentiment Distribution</h2>
-            <img src="aspect_sentiment_chart.png">
-        </div>
-
-        <div class="card">
-            <h2>Top Positive vs Negative Aspects</h2>
-            <img src="top_aspects_chart.png">
-        </div>
-
-    </body>
-    </html>
-    """
+    </div>
+</body>
+</html>
+"""
 
     file_path = os.path.join(output_dir, "report.html")
     with open(file_path, "w", encoding="utf-8") as f:
