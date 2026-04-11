@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Review Insights Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+</head>
+<body>
+    <div class="site-wrap">
+        <header class="site-header">
+            <h1 class="site-title">Review Insights Engine</h1>
+            <p class="site-subtitle">
+                Upload a CSV of movie reviews to run aspect-based sentiment analysis and generate an interactive insights report.
+            </p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-stack" role="alert">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <main class="content-stack">
+            <div class="card">
+                <h2 class="card-title">Upload your data</h2>
+                <p class="card-body muted card-intro">
+                    Select a <strong>.csv</strong> file with columns <code>movie</code>, <code>review_id</code>, and <code>review_text</code>.
+                </p>
+
+                <form class="upload-form" action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" id="upload-form">
+                    <div class="upload-zone">
+                        <p class="upload-zone-hint">Drag and drop is supported in many browsers — or choose a file below.</p>
+                        <input type="file" name="file" id="file-input" class="file-input" accept=".csv" required>
+                        <label for="file-input" class="file-label">Choose CSV file</label>
+                        <span class="file-name" id="file-name" aria-live="polite"></span>
+                    </div>
+                    <div class="btn-row">
+                        <button type="submit" class="btn btn-primary">Analyze reviews</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script>
+        (function () {
+            var input = document.getElementById("file-input");
+            var label = document.getElementById("file-name");
+            if (!input || !label) return;
+            input.addEventListener("change", function () {
+                label.textContent = input.files && input.files.length
+                    ? input.files[0].name
+                    : "";
+            });
+        })();
+    </script>
+</body>
+</html>

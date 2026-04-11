@@ -17,7 +17,7 @@ from src.export_results import (
     generate_html_report
 )
 
-def main(input_path, output_dir):
+def run_pipeline(input_path, output_dir):
 
     print("\nRunning Review Insights Engine...\n")
 
@@ -83,4 +83,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     # Pass both arguments into the main function
-    main(args.input, args.output)
+    run_pipeline(args.input, args.output)
